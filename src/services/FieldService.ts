@@ -1,11 +1,13 @@
-import {PrismaClient} from "@prisma/client"
 import Field from "../model/Field";
-import {create} from "node:domain";
+import prisma from "../config/db";
 
-const prisma =new PrismaClient();
+
 
 export const createField=async (fieldData:Field)=>{
-    return await prisma.field.create({
-        data:fieldData,
+    return prisma.field.create({
+        data: fieldData,
     });
 };
+export const getAll=async ()=>{
+    return prisma.field.findMany();
+}
