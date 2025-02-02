@@ -14,3 +14,26 @@ export const saveCrop = async (cropData: Crop):Promise<any> => {
         },
     });
 };
+export const getAllCrops=async ()=>{
+    return prisma.crop.findMany()
+}
+export const getCropByCode = async (cropCode: string) => {
+    return await prisma.crop.findUnique({
+        where: { cropCode },
+    });
+};
+export const updateCropByCode = async (cropCode: string, updatedData: any) => {
+    return await prisma.crop.upsert({
+        where: { cropCode },
+        update: updatedData,
+        create: {
+            cropCode,
+            ...updatedData
+        }
+    });
+};
+export const deleteCropByCode = async (cropCode: string) => {
+    return prisma.crop.delete({
+        where: { cropCode }
+    });
+};
