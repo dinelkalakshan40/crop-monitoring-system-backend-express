@@ -1,6 +1,6 @@
 import Field from "../model/Field";
 import { Request, Response } from "express";
-import {createField,getAll} from "../services/FieldService";
+import {createField, deleteField, getAll, getField, updateField} from "../services/FieldService";
 
 
 export const saveField =async (req:Request,res:Response):Promise<any>=>{
@@ -30,3 +30,56 @@ export const getAllField =async (req:Request,res:Response):Promise<any>=>{
         })
     }
 }
+export const getFieldById=async (req:Request,res:Response):Promise<any>=>{
+    try {
+        const {id}=req.params;
+        const field=await getField(id);
+        if (!field){
+            return res.status(404).json({
+                error:"field not found"
+            });
+        }else {
+            return res.status(200).json({
+                message: "Field found",
+                data: field,
+            })
+        }
+    }catch (error){
+        return res.status(500).json({
+            error: "Internal Server Error",
+            details: error,
+        })
+    }
+}
+export const updateFieldDta=async (req:Request,res:Response):Promise<any>=>{
+    try {
+        const {code}=req.params;
+        const fieldData:Partial<Field>=req.body;
+        const updatedField=await updateField(code,fieldData);
+        return res.status(200).json({
+            message: "Field updated successfully",
+            data: updatedField,
+        });
+    }catch (error){
+        return res.status(500).json({
+            error: "Internal Server Error",
+            details: error,
+        });
+    }
+}
+
+export const deleteFieldByCode = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const {code} = req.params;
+        await deleteField(code);
+
+        return res.status(200).json({
+            message: "Field deleted successfully",
+        });
+    } catch (error) {
+        return res.status(500).json({
+            error: "Internal Server Error",
+            details: error,
+        });
+    }
+};

@@ -19,4 +19,15 @@ model field {
   location  String
   fieldSize String
   category  String
+  crop      crop[]
+}
+
+model crop {
+  cropCode  String @id
+  name      String
+  category  String
+  status    String
+  season    String
+  field     field  @relation(fields: [fieldCode], references: [code], onUpdate: Cascade, onDelete: Cascade)
+  fieldCode String
 }
