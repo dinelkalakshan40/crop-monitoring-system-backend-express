@@ -30,3 +30,43 @@ export const savedStaff=async (staffData:Staff)=>{
         }
     });
 };
+export const getAllStaff = async () => {
+    return prisma.staff.findMany();
+};
+export const getStaffById = (id: string) => {
+    return prisma.staff.findUnique({
+        where: { id },
+        include: {
+            field: true // Includes field details in the response
+        }
+    });
+};
+export const updateStaffMember = async (id: string, staffData: Partial<Staff>) => {
+    // Check if the staff member exists before updating
+    const existingStaff = await prisma.staff.findUnique({
+        where: { id },
+    });
+
+    if (!existingStaff) {
+        throw new Error(`Staff member with ID ${id} not found.`);
+    }
+
+    // Update the staff member
+    return prisma.staff.update({
+        where: { id },
+        data: staffData,
+    });
+};
+export const deleteStaffMember = async (id: string) => {
+
+    const existingStaff = await prisma.staff.findUnique({
+        where: { id },
+    });
+
+    if (!existingStaff) {
+        throw new Error(`Staff member with ID ${id} not found.`);
+    }
+    return prisma.staff.delete({
+        where: { id },
+    });
+};
