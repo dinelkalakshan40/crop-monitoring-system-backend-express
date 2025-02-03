@@ -14,12 +14,13 @@ datasource db {
 }
 
 model field {
-  code      String @id
+  code      String  @id
   name      String
   location  String
   fieldSize String
   category  String
   crop      crop[]
+  staff     staff[]
 }
 
 model crop {
@@ -30,4 +31,15 @@ model crop {
   season    String
   field     field  @relation(fields: [fieldCode], references: [code], onUpdate: Cascade, onDelete: Cascade)
   fieldCode String
+}
+model staff {
+  id          String @id
+  name        String
+  Designation String
+  gender      String
+  dob         String
+  contact     String
+  role        String
+  field       field  @relation(fields: [fieldCode], references: [code])
+  fieldCode   String
 }
