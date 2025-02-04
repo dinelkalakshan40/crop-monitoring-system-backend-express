@@ -45,6 +45,7 @@ model staff {
   field       field       @relation(fields: [fieldCode], references: [code])
   fieldCode   String
   equipment   equipment[]
+  vehicle     vehicle[]
 }
 
 model equipment {
@@ -56,4 +57,13 @@ model equipment {
   fieldCode     String
   staff         staff  @relation(fields: [staffId], references: [id])
   field         field  @relation(fields: [fieldCode], references: [code])
+}
+
+model vehicle {
+  vehicleCode String @id
+  numberPlate String @unique
+  category    String
+  fuelType    String
+  staffId     String
+  staff       staff  @relation(fields: [staffId], references: [id], onDelete: Cascade)
 }
