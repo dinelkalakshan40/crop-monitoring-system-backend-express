@@ -4,6 +4,7 @@ import {createField, deleteField, getAll, getField, updateField} from "../servic
 
 
 export const saveField =async (req:Request,res:Response):Promise<any>=>{
+    console.log("Received request:", req.body);
     try{
         const fieldData:Field=req.body;
 
