@@ -21,7 +21,7 @@ export const savedStaff=async (staffData:Staff)=>{
         data: {
             id: staffData.id,
             name: staffData.name,
-            Designation: staffData.Designation,
+            designation: staffData.designation,
             gender: staffData.gender,
             dob: staffData.dob,
             contact: staffData.contact,
